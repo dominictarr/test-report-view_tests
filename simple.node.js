@@ -3,13 +3,19 @@ var trv = require('test-report-view')
   , it = require('it-is')
   , Reporter = require('test-report')
   
+
+function log (str) {
+  console.log('EXAMPLE TEST REPORT OUTPUT>>>')
+  console.log(str)
+  console.log('<<<EXAMPLE TEST REPORT OUTPUT END')
+
+}
+
 ;(function simple() {
   var reporter = new Reporter ('example')
 
   reporter.test('test1').test('test2')
-  console.log(reporter)
   var str = trv.view(reporter.report)
-  console.log(str)
   
   it(str).matches(/example/).matches(/test1/).matches(/test2/)
   
@@ -20,7 +26,7 @@ var trv = require('test-report-view')
 
   reporter.test('test1').test('test2').subreport('nested').test('inner')
   var str = trv.view(reporter.report)
-  console.log(str)
+  log(str)
   
   it(str).matches(/example/).matches(/test1/).matches(/test2/).matches(/nested/).matches(/inner/)
   
@@ -31,7 +37,7 @@ var trv = require('test-report-view')
     , err = new Error('EXAMPLE ERROR')
   reporter.test('fail', err)
   var str = trv.view(reporter.report)
-  console.log(str)
+  log(str)
   
   it(str).matches(/example/).matches(/fail/)
   it(str.indexOf('Error: EXAMPLE ERROR\n')).notEqual(-1)
